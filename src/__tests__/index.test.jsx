@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import App from '../App.jsx'
 import { sampleProducts } from './helpers.jsx'
 
@@ -14,9 +15,14 @@ test('displays all products initially', () => {
     })
 })
 
-test('shows "No products available" when filtering removes all products', () => {
+test('shows "No products available" when filtering removes all products', async () => {
     render(<App />)
     const filterDropdown = screen.getByRole('combobox')
-    filterDropdown.value = 'Non-Existent Category'
+  
+    // Now select a category that doesn't exist in your actual products.
+    // This requires that your <select> has <option value="Veggies">Veggies</option>
+    await userEvent.selectOptions(filterDropdown, 'Veggies')
+  
+    // The category is changed, so filteredProducts = [] → "No products available"
     expect(screen.getByText(/No products available/i)).toBeInTheDocument()
-})
+  })

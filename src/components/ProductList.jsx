@@ -1,20 +1,15 @@
 import React from 'react'
-import ProductCard from './ProductCard'
 
-// Sample product data (for display purposes only)
-const sampleProducts = [
-  { id: 1, name: 'Apple', price: '$1.00', inStock: true },
-  { id: 2, name: 'Milk', price: '$2.50', inStock: false },
-]
-
-const ProductList = () => {
+const ProductList = ({ products, addToCart }) => {
   return (
     <div>
-      <h2>Available Products</h2>
-
-      {/* TODO: Replace sample data with dynamic product list */}
-      {sampleProducts.map((product) => (
-        <ProductCard key={product.id} product={product} />
+      {products.map((product) => (
+        <div key={product.id} style={{ margin: '8px 0' }}>
+          <strong>{product.name}</strong> - {product.price} - {product.category}{' '}
+          {product.inStock ? '(In Stock)' : '(Out of Stock)'}
+          {' '}
+          <button onClick={() => addToCart(product)}>Add to Cart</button>
+        </div>
       ))}
     </div>
   )
